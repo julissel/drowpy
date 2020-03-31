@@ -1,5 +1,5 @@
 # Project exclude paths
 /.idea/
-/bin/
-/lib/
-/lib64/
+/venv/bin/
+/venv/lib/
+/venv/lib64/
