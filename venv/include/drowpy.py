@@ -1,3 +1,6 @@
+"""
+File creates a image with a simple house.
+"""
 import graphics as gr
 
 
@@ -28,7 +31,56 @@ def draw_background(window):
 
 
 def draw_house(window, x, y, width, height):
-    pass  # TODO
+    foundation_height = height // 8
+    walls_height = height // 2
+    walls_width = 7 * width // 8
+    roof_height = height - walls_height - foundation_height
+
+    draw_house_foundation(window, x, y, width, foundation_height)
+    draw_house_walls(window, x, y - foundation_height,
+                     walls_width, walls_height)
+    draw_house_roof(window, x, y - foundation_height - walls_height,
+                    width, roof_height)
+
+
+def draw_house_foundation(window, x, y, width, height):
+    foundation = gr.Rectangle(gr.Point(x - width // 2, y),
+                              gr.Point(x + width // 2, y - height))
+    foundation.setFill("grey")
+    foundation.draw(window)
+
+
+def draw_house_walls(window, x, y, width, height):
+    walls = gr.Rectangle(gr.Point(x - width // 2, y),
+                         gr.Point(x + width // 2, y - height))
+    walls.setFill("orange")
+    walls.draw(window)
+    draw_house_window(window, x, y - height // 4,
+                      width // 3, height // 2)
+
+
+def draw_house_roof(window, x, y, width, height):
+    roof = gr.Polygon(gr.Point(x - width // 2, y),
+                      gr.Point(x + width // 2, y),
+                      gr.Point(x, y - height))
+    roof.setFill("red")
+    roof.draw(window)
+
+
+def draw_house_window(window, x, y, width, height):
+    glass = gr.Rectangle(gr.Point(x - width // 2, y),
+                         gr.Point(x + width // 2, y - height))
+    glass.setFill("blue")
+    line1 = gr.Line(gr.Point(x,y), gr.Point(x, y - height))
+    line2 = gr.Line(gr.Point(x - width // 2, y - height // 2),
+                    gr.Point(x + width // 2, y - height // 2))
+    glass.draw(window)
+    line1.draw(window)
+    line2.draw(window)
+    line1.setOutline("black")
+    line2.setOutline("black")
+    line1.setWidth(2)
+    line2.setWidth(2)
 
 
 if __name__ == "__main__":
