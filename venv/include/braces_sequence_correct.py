@@ -1,6 +1,3 @@
-import stack
-
-
 def is_braces_sequence_correct(seq: str) -> bool:
     """
     Check correctness of braces sequence in statement
@@ -13,7 +10,7 @@ def is_braces_sequence_correct(seq: str) -> bool:
     >>> is_braces_sequence_correct("[(])")
     False
     """
-    pass
+    return True
 
 
 if __name__ == "__main__":
