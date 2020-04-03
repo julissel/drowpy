@@ -11,8 +11,8 @@ def is_not_in_descending_order(a):
     :param a: list
     :return: bool
     """
-    for i in range(len(a)-1):
-        if a[i] > a[i+1]:
+    for i in range(len(a) - 1):
+        if a[i] > a[i + 1]:
             return False
         return True
 
@@ -23,11 +23,12 @@ class TestSort(unittest.TestCase):
                  [4, 2, 5, 1, 3], [5, 4, 4, 5, 5],
                  list(range(10)), list(range(10, 0, -1)))
         for b in cases:
-            a = list(b)
-            sort_algorithm(b)
-            self.assertCountEqual(a, b)
-            self.assertTrue(is_not_in_descending_order(a))
+            with self.subTest(case=b):
+                a = list(b)
+                sort_algorithm(b)
+                self.assertCountEqual(a, b)
+                self.assertTrue(is_not_in_descending_order(a))
 
 
-if True: #__name__ == "__main__":
+if True:  # __name__ == "__main__":
     unittest.main()
