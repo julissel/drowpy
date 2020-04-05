@@ -18,16 +18,23 @@ def is_not_in_descending_order(a):
 
 
 class TestSort(unittest.TestCase):
+    def setUp(self):
+        self.cases = ([1], [], [1, 2], [1, 2, 3, 4, 5],
+                      [4, 2, 5, 1, 3], [5, 4, 4, 5, 5],
+                      list(range(10)), list(range(10, 0, -1)))
+
     def test_simple_cases(self):
-        cases = ([1], [], [1, 2], [1, 2, 3, 4, 5],
-                 [4, 2, 5, 1, 3], [5, 4, 4, 5, 5],
-                 list(range(10)), list(range(10, 0, -1)))
-        for b in cases:
+        for b in self.cases:
             with self.subTest(case=b):
                 a = list(b)
-                sort_algorithm(b)
-                self.assertCountEqual(a, b)
-                self.assertTrue(is_not_in_descending_order(a))
+                sort_algorithm(a)
+                self.assertCountEqual(a, b,
+                                      msg="Elements changed. a = " + str(a))
+                self.assertTrue(is_not_in_descending_order(a),
+                                msg="List not sorted. a = " + str(a))
+
+    def tearDown(self):
+        self.cases = None
 
 
 if True:  # __name__ == "__main__":
