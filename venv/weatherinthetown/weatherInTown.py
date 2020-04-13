@@ -1,38 +1,43 @@
 import pprint
 import requests
-from dateutil.parser import parse
+from configparser import ConfigParser
 
 
-class YahooWeatherForecast:
+class OpenWeatherForecast:
+    # API call
+    def __init__(self):
+        self._city_cache = {}
 
+    # For temperature in Celsius use units=metric
     def get(self, city):
-        url = f"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22{city}%22)%20and%20u%3D%27c%27&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+        if city in self._city_cache:
+            return self._city_cache
+        config = ConfigParser()
+        config.read('weather.conf')
+        api_id = config['CONFIG']['OPENWEATHER_API_ID']
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={city},ru&units=metric&APPID={api_id}"
+        print('Sending HTTP request')
         data = requests.get(url).json()
-        forecast_data = data["query"]["results"]["channel"]["items"]["forecast"]
-        forecast = []
-        for day_data in forecast_data:
-            forecast.append({
-                "date": parse(day_data["date"]),
-                "high_temp": day_data["high"]
-            })
-        return forecast
+        forecast_data = data['main']['temp']
+        self._city_cache[city] = forecast_data
+        return forecast_data
 
 
 class CityInfo:
 
     def __init__(self, city, weather_forecast=None):
         self.city = city
-        self._weather_forecast = weather_forecast or YahooWeatherForecast()
+        self._weather_forecast = weather_forecast or OpenWeatherForecast()
 
     def weather_forecast(self):
         return self._weather_forecast.get(self.city)
 
 
-
 def _main():
-    city_info = CityInfo("Moscow")
-    forecast = city_info._weather_forecast()
-    pprint.pprint(forecast)
+    weather_forecast = OpenWeatherForecast()
+    for req in range(5):
+        city_info = CityInfo("Moscow", weather_forecast=weather_forecast)
+        city_info._weather_forecast()
 
 
 if __name__ == '__main__':
