@@ -3,3 +3,5 @@
 /venv/bin/
 /venv/lib/
 /venv/lib64/
+/venv/weatherinthetown/weather.conf
+/venv/weatherinthetown/__init__.py
