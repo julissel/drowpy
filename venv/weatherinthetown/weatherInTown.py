@@ -1,10 +1,9 @@
-import pprint
 import requests
 from configparser import ConfigParser
 
 
 class OpenWeatherForecast:
-    # API call
+
     def __init__(self):
         self._city_cache = {}
 
@@ -12,13 +11,24 @@ class OpenWeatherForecast:
     def get(self, city):
         if city in self._city_cache:
             return self._city_cache
+
         config = ConfigParser()
         config.read('weather.conf')
         api_id = config['CONFIG']['OPENWEATHER_API_ID']
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city},ru&units=metric&APPID={api_id}"
         print('Sending HTTP request')
-        data = requests.get(url).json()
-        forecast_data = data['main']['temp']
+        try:
+            data = requests.get(url).json()
+        except ConnectionError:
+            print('Connection error! Try later.')
+            return None
+
+        try:
+            forecast_data = data['main']['temp']
+        except IndexError:
+            print('Index error! Look response sample in API documentation.')
+            return None
+
         self._city_cache[city] = forecast_data
         return forecast_data
 
@@ -34,10 +44,10 @@ class CityInfo:
 
 
 def _main():
-    weather_forecast = OpenWeatherForecast()
-    for req in range(5):
-        city_info = CityInfo("Moscow", weather_forecast=weather_forecast)
-        city_info._weather_forecast()
+    city = "Moscow"
+    city_info = CityInfo(city)
+    forecast = city_info.weather_forecast()
+    print(f"Today in {city} is {forecast} degrees Celsius.")
 
 
 if __name__ == '__main__':
