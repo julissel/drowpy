@@ -51,9 +51,9 @@ class ExDog(Dog):
 
 
 
-fox = ExDog("Fox", "mops", exporter=ExportXML())
+fox = ExDog("Fox", "pug-dog", exporter=ExportXML())
 print(fox.export())
 
-muhtar = ExDog("Muhtar", "haskie")
+muhtar = ExDog("Muhtar", "husky")
 print(muhtar.export())
 
