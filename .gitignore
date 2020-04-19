@@ -5,3 +5,4 @@
 /venv/lib64/
 /venv/weatherinthetown/weather.conf
 /venv/weatherinthetown/__init__.py
+/venv/include/log_descriptor.txt
