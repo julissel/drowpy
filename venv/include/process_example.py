@@ -29,12 +29,12 @@ proc.join()  # finish child process
 
 # generate new child process
 pid = os.fork()
-tmp_var = "val_0"
+tmp_var = "value_0"
 
 if pid == 0:
     # child process
     for i in range(10):
-        tmp_var = f"val_{str(i)}"
+        tmp_var = f"value_{str(i)}"
         print("child: ", os.getpid(), "tmp value = ", tmp_var)
         time.sleep(5)
     time.sleep(5)
