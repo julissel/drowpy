@@ -35,7 +35,7 @@ sock2.close()
 
 # Server
 with socket.socket() as sock3:
-    sock3.bind(("", 10000))
+    sock3.bind(("", 10001))
     sock3.listen()
 
     while True:
@@ -49,5 +49,5 @@ with socket.socket() as sock3:
 
 
 # Client
-with socket.create_connection(("127.0.0.1", 10001)) as sock4:
+with socket.create_connection(("127.0.0.1", 10001), 5) as sock4:
     sock4.sendall("test ping_3".encode("utf8"))
