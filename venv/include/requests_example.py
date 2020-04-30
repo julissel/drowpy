@@ -1,5 +1,6 @@
 import requests
 import json
+import re
 
 
 # Make a simple request
@@ -56,10 +57,6 @@ print(type(r.json), r.content)
 print(r.status_code)
 print(requests.codes.ok)
 
-# bad_req = requests.get('http://httpbin.org/status/404')
-# print(bad_req.status_code)
-# bad_req.raise_for_status()
-
 
 # response headers
 print(r.headers)
@@ -95,3 +92,17 @@ s = requests.Session()
 s.headers.update({'x-test': 'true'})
 r = s.get('http://httpbin.org/headers', headers={'x-test2': 'true'})
 print(r.text)
+
+
+# re
+result = requests.get("http://cbr.ru")
+html = result.text
+match = re.search(r"Евро\D+(\d+,\d+)", html)
+rate = match.group(1)
+print("The Euro rate = ", rate)
+
+
+print("")
+bad_req = requests.get('http://httpbin.org/status/404')
+print(bad_req.status_code)
+bad_req.raise_for_status()
