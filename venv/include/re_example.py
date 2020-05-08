@@ -85,3 +85,51 @@ print()
 str_login = 'brilliAnte_7mile'
 if re.match(r"^\w{8,16}$", str_login):
     print(f"Login '{str_login}' is correct")
+
+
+
+# 9
+# Проверить, что пароль состоит не менее чем из 8 символов без пробелов.
+# Пароль должен содержать хотя бы одну: строчную букву, заглавную, цифру
+password = 'dfkw245A'
+print()
+if re.match(r"^(?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9])\S{8,}$", password):
+    print(f"Password '{password}' is correct")
+
+
+# 10
+# Переформатировать код, убрав лишние пробелы между def, именем функции и
+# (Например: def    myFunc   (x, y):  => def myFunc(x, y):
+list_func = ['def    first_fun (par1, par2)', 'def   fun2(f1,f2,f3)', 'def  f3     ()']
+print()
+for fun in list_func:
+    print('old string', fun)
+    print('new string =', re.sub(r'def\s+(\w+)\s*\(', r'def \1(', fun))
+
+
+
+
+# 11
+# Заменить все "camel_case" на "сamelCase"
+# Например: my_function_name, peer__2__peer  =>  myFunctionName, peer2Peer
+f_name = 'my_fun__new_val'
+new_name = re.sub('_+([a-zA-Z\d])', lambda x: x.group(1).upper(), f_name.lower())
+print()
+print(f'Old function name = {f_name}')
+print('New function name = ', new_name)
+
+
+# 12
+'''
+Напишите регулярное выражение, которое с помощью re.findall найдет все последовательности цифр в строке. 
+Например, для строки a123b45с6d должно вернуться ['123', '45', '6']
+'''
+
+def find_all_digits(text):
+    exp = r'\d+'
+    return re.findall(exp, text)
+
+print()
+myString = 'a123b45c60O1d_9_1'
+print(find_all_digits(myString))
+
